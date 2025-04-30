@@ -23,7 +23,7 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 if "api_key_entered" in st.session_state and st.session_state.api_key_entered:
-    if prompt := st.chat_input("What is your question?"):
+    if prompt := st.chat_input("Enter your question"):
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
