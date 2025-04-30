@@ -1,2 +1,4 @@
 import streamlit as st
-st.write("Hello World")
+
+user_key = st.text_input("Enter your API key")
+user_Q = st.text_input("write your question")
