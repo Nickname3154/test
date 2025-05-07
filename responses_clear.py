@@ -1,16 +1,19 @@
-
 import streamlit as st
 from openai import OpenAI
 
 st.title("My LLM")
 user_key = st.text_input("Enter your API key", key = "api_key")
 
+if st.button("Clear Chat"):
+    st.session_state.messages = []
+    st.experimental_rerun()
+
 @st.cache_data(show_spinner="Generating response...", persist="disk")
-def get_cached_response(api_key, model, prompt):
+def get_cached_response(api_key, model, messages):
     client = OpenAI(api_key=api_key)
     completion = client.chat.completions.create(
         model=model,
-        messages=[{"role": "user", "content": prompt}],
+        messages=messages,
         stream=False,
     )
     return completion.choices[0].message.content
@@ -42,7 +45,7 @@ if "api_key_entered" in st.session_state and st.session_state.api_key_entered:
         response = get_cached_response(
             user_key,
             st.session_state["openai_model"],
-            prompt,
+            st.session_state.messages,
         )
         with st.chat_message("assistant"):
             st.markdown(response)
