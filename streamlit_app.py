@@ -5,11 +5,11 @@ st.title("My LLM")
 user_key = st.text_input("Enter your API key", key = "api_key")
 
 @st.cache_data(show_spinner="Generating response...", persist="disk")
-def get_cached_response(api_key, model, messages):
+def get_cached_response(api_key, model, prompt):
     client = OpenAI(api_key=api_key)
     completion = client.chat.completions.create(
         model=model,
-        messages=messages,
+        messages=[{"role": "user", "content": prompt}],
         stream=False,
     )
     return completion.choices[0].message.content
@@ -41,7 +41,7 @@ if "api_key_entered" in st.session_state and st.session_state.api_key_entered:
         response = get_cached_response(
             user_key,
             st.session_state["openai_model"],
-            st.session_state.messages,
+            prompt,
         )
         with st.chat_message("assistant"):
             st.markdown(response)
