@@ -4,6 +4,16 @@ from openai import OpenAI
 st.title("My LLM")
 user_key = st.text_input("Enter your API key", key = "api_key")
 
+@st.cache_data(show_spinner="Generating response...", persist="disk")
+def get_cached_response(api_key, model, messages):
+    client = OpenAI(api_key=api_key)
+    completion = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        stream=False,
+    )
+    return completion.choices[0].message.content
+
 client = OpenAI(api_key = st.session_state.api_key)
 
 if user_key:
@@ -28,16 +38,14 @@ if "api_key_entered" in st.session_state and st.session_state.api_key_entered:
         with st.chat_message("user"):
             st.markdown(prompt)
 
+        response = get_cached_response(
+            user_key,
+            st.session_state["openai_model"],
+            st.session_state.messages,
+        )
         with st.chat_message("assistant"):
-            stream = client.chat.completions.create(
-                model=st.session_state["openai_model"],
-                messages=[
-                    {"role": m["role"], "content": m["content"]}
-                    for m in st.session_state.messages
-                ],
-                stream=True,
-            )
-            response = st.write_stream(stream)
+            st.markdown(response)
+
         st.session_state.messages.append({"role": "assistant", "content": response})
 else:
     st.warning("Please enter your API key to continue.")
