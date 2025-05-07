@@ -2,7 +2,7 @@ import streamlit as st
 from openai import OpenAI
 
 st.title("My LLM")
-user_key = st.text_input("Enter your API key", key = "api_key")
+user_key = st.text_input("Enter your API key", key = "api_key", type = "password")
 
 if st.button("Clear Chat"):
     st.session_state.messages = []
