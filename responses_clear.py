@@ -6,7 +6,7 @@ user_key = st.text_input("Enter your API key", key = "api_key")
 
 if st.button("Clear Chat"):
     st.session_state.messages = []
-    st.experimental_rerun()
+    st.rerun()
 
 @st.cache_data(show_spinner="Generating response...", persist="disk")
 def get_cached_response(api_key, model, messages):
