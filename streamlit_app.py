@@ -4,7 +4,7 @@ from openai import OpenAI
 st.title("My LLM")
 user_key = st.text_input("Enter your API key", key = "api_key")
 
-client = OpenAI(api_key = st.session_state.key)
+client = OpenAI(api_key = st.session_state.api_key)
 
 if user_key:
     st.text("API key entered successfully.")
