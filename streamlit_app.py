@@ -23,7 +23,7 @@ else:
     st.text("Please enter your API key.")
 
 if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo"
+    st.session_state["openai_model"] = "gpt-4.1-mini"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
