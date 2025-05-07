@@ -2,7 +2,7 @@ import streamlit as st
 from openai import OpenAI
 
 st.title("My LLM")
-user_key = st.text_input("Enter your API key", key = "api_key",type = "password")
+user_key = st.text_input("Enter your API key", key = "api_key", type = "password")
 
 @st.cache_data(show_spinner="Generating response...", persist="disk")
 def get_cached_response(api_key, model, prompt):
