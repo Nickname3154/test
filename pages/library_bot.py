@@ -429,7 +429,7 @@ if api_key and (prompt := st.chat_input("질문을 입력하세요")):
 
     with st.chat_message("assistant"):
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4.1-mini",
             messages=st.session_state.messages,
         )
         answer = response.choices[0].message.content
